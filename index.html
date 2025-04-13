@@ -9,42 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-
- /* 모바일 화면 전용 스타일 */
-    @media (max-width: 767px) {
-        .passport-container {
-            height: auto;
-        }
-        
-        .passport {
-            position: relative;
-            height: auto;
-        }
-        
-        .passport-cover, .identity-page {
-            height: auto;
-            min-height: 300px;
-        }
-        
-        .grid {
-            display: block;
-        }
-        
-        .col-span-2, .col-span-1 {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        
-        .explorer-level {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .explorer-progress {
-            width: 100%;
-            margin: 5px 0;
-        }
-    }
         :root {
             --sky-blue: #5DA9E9;
             --sunset-coral: #FF7E67;
@@ -403,29 +367,12 @@
         }
 
         .passport-back {
-        transform: rotateY(180deg);
-    }
-
-    .passport.flipped {
-        transform: rotateY(180deg);
-    }
-    
-    /* 모바일 화면용 추가 코드 */
-    @media (max-width: 767px) {
-        .passport-back {
-            transform: none;
+            transform: rotateY(180deg);
         }
 
         .passport.flipped {
-            transform: none;
+            transform: rotateY(180deg);
         }
-
-        .passport-front, .passport-back {
-            position: relative;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-    }
 
         .identity-page {
             background-color: var(--cloud-white);
@@ -472,46 +419,21 @@
         }
 
         .info-row {
-        display: flex;
-        margin-bottom: 15px;
-    }
-
-    .info-label {
-        width: 120px;
-        color: var(--stone-gray);
-        font-size: 14px;
-    }
-
-    .info-value {
-        flex: 1;
-        color: var(--deep-navy);
-        font-weight: 500;
-    }
-    
-    /* 모바일 화면용 추가 코드 */
-    @media (max-width: 767px) {
-        .info-row {
-            flex-direction: column;
-            margin-bottom: 10px;
+            display: flex;
+            margin-bottom: 15px;
         }
-        
+
         .info-label {
-            width: 100%;
-            margin-bottom: 2px;
+            width: 120px;
+            color: var(--stone-gray);
+            font-size: 14px;
         }
-        
+
         .info-value {
-            width: 100%;
+            flex: 1;
+            color: var(--deep-navy);
+            font-weight: 500;
         }
-        
-        .passport-emblem {
-            display: none; /* 모바일에서는 엠블럼 숨김 */
-        }
-        
-        .identity-page {
-            padding: 10px;
-        }
-    }
 
         .signature-box {
             border-bottom: 1px solid var(--stone-gray);
