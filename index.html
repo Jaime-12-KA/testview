@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passportr - Digital City Passport Experience</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #5DA9E9;
+            --sunset-coral: #FF7E67;
+            --cloud-white: #F8F9FA;
+            --sunshine-yellow: #FFDA63;
+            --light-sand: #F4EAD5;
+            --deep-navy: #2C3E50;
+            --stone-gray: #8696A7;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--deep-navy);
+            background-color: var(--cloud-white);
+        }
+        
+        h1, h2, h3, h4, .serif-font {
+            font-family: 'Georgia', serif;
+        }
+        
+        .bg-sky-blue { background-color: var(--sky-blue); }
+        .bg-sunset-coral { background-color: var(--sunset-coral); }
+        .bg-cloud-white { background-color: var(--cloud-white); }
+        .bg-sunshine-yellow { background-color: var(--sunshine-yellow); }
+        .bg-light-sand { background-color: var(--light-sand); }
+        .bg-deep-navy { background-color: var(--deep-navy); }
+        .bg-stone-gray { background-color: var(--stone-gray); }
+        
+        .text-sky-blue { color: var(--sky-blue); }
+        .text-sunset-coral { color: var(--sunset-coral); }
+        .text-cloud-white { color: var(--cloud-white); }
+        .text-sunshine-yellow { color: var(--sunshine-yellow); }
+        .text-light-sand { color: var(--light-sand); }
+        .text-deep-navy { color: var(--deep-navy); }
+        .text-stone-gray { color: var(--stone-gray); }
+        
+        .border-sky-blue { border-color: var(--sky-blue); }
+        .border-sunset-coral { border-color: var(--sunset-coral); }
+        .border-sunshine-yellow { border-color: var(--sunshine-yellow); }
+        .border-light-sand { border-color: var(--light-sand); }
+        .border-deep-navy { border-color: var(--deep-navy); }
+        .border-stone-gray { border-color: var(--stone-gray); }
+        
+        .passport-cover {
+            height: 450px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .passport-cover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .passport-page {
+            min-height: 450px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background-color: var(--cloud-white);
+            position: relative;
+            overflow: hidden;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSI0MCIgc3Ryb2tlPSIjRjRFQUQ1IiBzdHJva2Utd2lkdGg9IjAuNSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+        }
+        
+        .stamp {
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .stamp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: var(--cloud-white);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .challenge-card {
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .level-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .level-badge::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px dashed var(--sky-blue);
+            animation: rotate 15s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .initial-badge {
+            width: 100px;
+            height: 100px;
+            background-color: var(--light-sand);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif;
+            font-size: 36px;
+            color: var(--deep-navy);
+        }
+        
+        .calendar-day {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 12px;
+            margin: 2px;
+        }
+        
+        .achievement-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .achievement-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .badge-locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+        
+        .collection-quest {
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .collection-quest:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--sunset-coral);
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .popup {
+            background-color: var(--cloud-white);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+            overflow: hidden;
+            animation: zoomIn 0.3s ease forwards;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .tab-btn {
+            position: relative;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .tab-btn.active {
+            color: var(--sky-blue);
+        }
+        
+        .tab-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: var(--sky-blue);
+            border-radius: 3px;
+        }
+        
+        .passport-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-sand);
+            margin-bottom: 20px;
+        }
+        
+        .passport-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .passport-tab.active {
+            color: var(--sky-blue);
+            font-weight: 600;
+        }
+        
+        .passport-tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--sky-blue);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--sunshine-yellow);
+            animation: confetti-fall 3s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+        }
+        
+        .tower-illustration {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .passport-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.5) 100%);
+        }
+        
+        .city-name {
+            margin-top: auto;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Updated Styles for Simple Passport Flipping */
+        .passport-container {
+            position: relative;
+            height: 450px;
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .passport {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+            transform-style: preserve-3d;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .passport-front, .passport-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .passport-back {
+            transform: rotateY(180deg);
+        }
+
+        .passport.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .identity-page {
+            background-color: var(--cloud-white);
+            position: relative;
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .identity-page:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iODAiIGhlaWdodD0iODAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxjaXJjbGUgY3g9IjQwIiBjeT0iNDAiIHI9IjE1IiBmaWxsPSJub25lIiBzdHJva2U9IiNGNEVBRDUiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PHBhdGggZD0iTTAgMCBMMTAwIDEwMCIgc3Ryb2tlPSIjRjRFQUQ1IiBzdHJva2Utd2lkdGg9IjAuMyIgc3Ryb2tlLWRhc2hhcnJheT0iNSwyIi8+PC9zdmc+');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .passport-emblem {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNURBOUU5IiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2tlLWRhc2hhcnJheT0iMSwxIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMzUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVEQTlFOSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48dGV4dCB4PSI1MCIgeT0iNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSI4IiBmaWxsPSIjNURBOUU5Ij5QQVNTUE9SVFIgT0ZGSUNJQUw8L3RleHQ+PC9zdmc+');
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .page-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: var(--stone-gray);
+            font-weight: 500;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            width: 120px;
+            color: var(--stone-gray);
+            font-size: 14px;
+        }
+
+        .info-value {
+            flex: 1;
+            color: var(--deep-navy);
+            font-weight: 500;
+        }
+
+        .signature-box {
+            border-bottom: 1px solid var(--stone-gray);
+            padding-bottom: 5px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .view-stamps-prompt {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--stone-gray);
+            font-size: 14px;
+        }
+
+        .explorer-level {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .explorer-progress {
+            flex: 1;
+            height: 6px;
+            background-color: var(--light-sand);
+            border-radius: 3px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+
+        .explorer-progress-fill {
+            height: 100%;
+            background-color: var(--sunset-coral);
+            border-radius: 3px;
+        }
+
+        .status-active {
+            color: var(--sunset-coral);
+            font-weight: 600;
+        }
+
+        .corner-fold {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.05) 50%);
+            border-radius: 0 0 0 5px;
+        }
+
+        .corner-fold-tr {
+            top: 0;
+            right: 0;
+            transform: rotate(90deg);
+        }
+
+        .corner-fold-br {
+            bottom: 0;
+            right: 0;
+            transform: rotate(180deg);
+        }
+
+        .corner-fold-bl {
+            bottom: 0;
+            left: 0;
+            transform: rotate(270deg);
+        }
+
+        /* Improved Flip Button Styles */
+        .flip-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .flip-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .flip-btn:active {
+            transform: scale(0.95);
+        }
+
+        .flip-btn-front {
+            background-color: rgba(255, 126, 103, 0.7);
+        }
+
+        .flip-btn-back {
+            left: 20px;
+            right: auto;
+            background-color: rgba(93, 169, 233, 0.7);
+        }
+
+        /* New styles for language toggle */
+        .language-toggle {
+            background-color: var(--light-sand);
+            border-radius: 20px;
+            padding: 2px;
+            display: inline-flex;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .language-option {
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .language-option.active {
+            color: var(--deep-navy);
+        }
+
+        .language-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            height: calc(100% - 4px);
+            border-radius: 18px;
+            background-color: white;
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        /* Interactive hover effect styles */
+        .hover-effect {
+            transition: all 0.2s ease;
+        }
+
+        .hover-effect:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-effect {
+            transition: all 0.2s ease;
+        }
+
+        .btn-effect:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-effect:active {
+            transform: translateY(1px);
+        }
+
+        /* Switch styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--sky-blue);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification System -->
+    <div id="notification" class="fixed top-4 right-4 bg-sunset-coral text-white px-4 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 flex items-center">
+        <i class="fas fa-bell mr-2"></i>
+        <span id="notification-text" data-en="New challenge available!" data-kr="새로운 도전 과제가 있습니다!">New challenge available!</span>
+    </div>
+    
+    <!-- Level Up Modal -->
+    <div id="levelUpModal" class="modal">
+        <div class="popup p-8 text-center">
+            <div class="absolute inset-0 overflow-hidden">
+                <div id="confetti-container"></div>
+            </div>
+            <h2 class="text-2xl font-bold serif-font mb-4" data-en="Level Up!" data-kr="레벨 업!">Level Up!</h2>
+            <div class="mb-6">
+                <div class="w-24 h-24 bg-sunshine-yellow rounded-full flex items-center justify-center mx-auto mb-4 animate__animated animate__bounceIn">
+                    <span class="text-deep-navy text-3xl font-bold">12</span>
+                </div>
+                <p class="text-lg" data-en="Congratulations! You've reached <span class='font-bold'>Level 12</span>" data-kr="축하합니다! <span class='font-bold'>레벨 12</span>에 도달했습니다">Congratulations! You've reached <span class="font-bold">Level 12</span></p>
+                <p class="text-stone-gray mt-2" data-en="You've unlocked new passport designs and special stamps!" data-kr="새로운 여권 디자인과 특별한 스탬프가 해제되었습니다!">You've unlocked new passport designs and special stamps!</p>
+            </div>
+            <div class="bg-light-sand p-4 rounded-lg mb-6">
+                <h3 class="font-bold mb-2" data-en="Level 12 Rewards:" data-kr="레벨 12 보상:">Level 12 Rewards:</h3>
+                <ul class="text-left">
+                    <li class="flex items-center mb-2"><i class="fas fa-unlock text-sunset-coral mr-2"></i> <span data-en="Premium Seoul Passport Design" data-kr="프리미엄 서울 여권 디자인">Premium Seoul Passport Design</span></li>
+                    <li class="flex items-center mb-2"><i class="fas fa-unlock text-sunset-coral mr-2"></i> <span data-en="+2 Streak Protection Items" data-kr="+2 연속 기록 보호 아이템">+2 Streak Protection Items</span></li>
+                    <li class="flex items-center"><i class="fas fa-unlock text-sunset-coral mr-2"></i> <span data-en="New Achievement Category: 'Night Explorer'" data-kr="새로운 업적 카테고리: '야간 탐험가'">New Achievement Category: "Night Explorer"</span></li>
+                </ul>
+            </div>
+            <button class="bg-sunset-coral text-white px-6 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-colors btn-effect" onclick="closeModal('levelUpModal')" data-en="Claim Rewards" data-kr="보상 받기">
+                Claim Rewards
+            </button>
+        </div>
+    </div>
+    
+    <!-- Challenge Completed Modal -->
+    <div id="challengeCompletedModal" class="modal">
+        <div class="popup p-8 text-center">
+            <div class="mb-6">
+                <div class="w-24 h-24 bg-sunshine-yellow rounded-full flex items-center justify-center mx-auto mb-4 animate__animated animate__tada">
+                    <i class="fas fa-trophy text-deep-navy text-4xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold serif-font mb-2" data-en="Challenge Complete!" data-kr="도전 완료!">Challenge Complete!</h2>
+                <p class="text-lg" data-en="'Seoul Street Food Explorer'" data-kr="'서울 길거리 음식 탐험가'">Seoul Street Food Explorer</p>
+                <p class="text-stone-gray mt-2" data-en="You've visited 5 street food locations in Seoul!" data-kr="서울에서 5곳의 길거리 음식점을 방문했습니다!">You've visited 5 street food locations in Seoul!</p>
+            </div>
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-center">
+                    <p class="font-bold" data-en="XP Earned" data-kr="획득한 XP">XP Earned</p>
+                    <p class="text-xl text-sky-blue">+150 XP</p>
+                </div>
+                <div class="text-center">
+                    <p class="font-bold" data-en="New Stamp" data-kr="새 스탬프">New Stamp</p>
+                    <div class="w-12 h-12 bg-sunset-coral rounded-full mx-auto mt-1"></div>
+                </div>
+                <div class="text-center">
+                    <p class="font-bold" data-en="Streak" data-kr="연속 기록">Streak</p>
+                    <p class="text-xl text-sky-blue">+1 Day</p>
+                </div>
+            </div>
+            <button class="bg-sunset-coral text-white px-6 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-colors btn-effect" onclick="closeModal('challengeCompletedModal')" data-en="Claim Rewards" data-kr="보상 받기">
+                Claim Rewards
+            </button>
+        </div>
+    </div>
+    
+    <!-- New Collection Modal -->
+    <div id="newCollectionModal" class="modal">
+        <div class="popup p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold serif-font" data-en="New Collection Quest" data-kr="새로운 컬렉션 퀘스트">New Collection Quest</h2>
+                <button onclick="closeModal('newCollectionModal')" class="hover-effect">
+                    <i class="fas fa-times text-stone-gray"></i>
+                </button>
+            </div>
+            <div class="bg-light-sand p-4 rounded-lg mb-6">
+                <h3 class="text-xl font-bold mb-2 serif-font" data-en="Seoul Royal Palace Tour" data-kr="서울 왕궁 투어">Seoul Royal Palace Tour</h3>
+                <p class="mb-4" data-en="Visit all 5 of Seoul's royal palaces to complete this exclusive collection!" data-kr="서울의 5대 왕궁을 모두 방문하여 이 특별한 컬렉션을 완성하세요!">Visit all 5 of Seoul's royal palaces to complete this exclusive collection!</p>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-medium" data-en="Collection Progress:" data-kr="컬렉션 진행 상황:">Collection Progress:</span>
+                    <span data-en="0/5 Completed" data-kr="0/5 완료">0/5 Completed</span>
+                </div>
+                <div class="progress-bar mb-4">
+                    <div class="progress-fill bg-sky-blue" style="width: 0%"></div>
+                </div>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="stamp w-12 h-12 badge-locked mx-auto">
+                        <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                            <i class="fas fa-lock text-cloud-white"></i>
+                        </div>
+                    </div>
+                    <div class="stamp w-12 h-12 badge-locked mx-auto">
+                        <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                            <i class="fas fa-lock text-cloud-white"></i>
+                        </div>
+                    </div>
+                    <div class="stamp w-12 h-12 badge-locked mx-auto">
+                        <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                            <i class="fas fa-lock text-cloud-white"></i>
+                        </div>
+                    </div>
+                    <div class="stamp w-12 h-12 badge-locked mx-auto">
+                        <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                            <i class="fas fa-lock text-cloud-white"></i>
+                        </div>
+                    </div>
+                    <div class="stamp w-12 h-12 badge-locked mx-auto">
+                        <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                            <i class="fas fa-lock text-cloud-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="font-bold mb-3" data-en="Completion Rewards:" data-kr="완료 보상:">Completion Rewards:</h3>
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-sunshine-yellow rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-star text-deep-navy"></i>
+                    </div>
+                    <span data-en="Special Badge" data-kr="특별 배지">Special Badge</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-sky-blue rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-trophy text-white"></i>
+                    </div>
+                    <span data-en="500 XP" data-kr="500 XP">500 XP</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-sunset-coral rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-stamp text-white"></i>
+                    </div>
+                    <span data-en="Royal Stamp" data-kr="왕실 스탬프">Royal Stamp</span>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+                <button class="bg-sky-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-colors btn-effect" data-en="Start Collection" data-kr="컬렉션 시작">
+                    Start Collection
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <div class="flex items-center">
+                <h1 class="text-3xl font-bold serif-font text-deep-navy">Passportr</h1>
+                <div class="ml-3 flex items-center bg-light-sand px-3 py-1 rounded-full">
+                    <div class="level-badge w-8 h-8 bg-sky-blue text-white rounded-full flex items-center justify-center text-sm font-bold mr-2">
+                        12
+                    </div>
+                    <div>
+                        <div class="flex items-center">
+                            <span class="text-xs font-medium" data-en="Level 12" data-kr="레벨 12">Level 12</span>
+                            <span class="text-xs text-stone-gray ml-2">4,250 / 5,000 XP</span>
+                        </div>
+                        <div class="progress-bar w-32 mt-1">
+                            <div class="progress-fill bg-sky-blue" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <!-- Language Toggle -->
+                <div class="language-toggle mr-4">
+                    <div class="language-option en active" onclick="switchLanguage('en')">EN</div>
+                    <div class="language-option kr" onclick="switchLanguage('kr')">KR</div>
+                    <div class="language-slider" style="width: 36px;"></div>
+                </div>
+                <div class="relative mr-4">
+                    <button class="relative hover-effect" onclick="showNotification(document.getElementById('notification-text').getAttribute(currentLanguage === 'en' ? 'data-en' : 'data-kr'))">
+                        <i class="fas fa-bell text-stone-gray text-xl"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                </div>
+                <div class="relative mr-4">
+                    <button class="hover-effect">
+                        <i class="fas fa-globe text-stone-gray text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-light-sand rounded-full flex items-center justify-center mr-2">
+                        <span class="text-deep-navy font-medium">JS</span>
+                    </div>
+                    <span class="font-medium">Jaime</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Navigation -->
+        <nav class="flex justify-center mb-10">
+            <div class="flex space-x-12">
+                <button class="tab-btn active flex flex-col items-center hover-effect" data-tab="passport">
+                    <i class="fas fa-passport text-2xl mb-1"></i>
+                    <span data-en="Passport" data-kr="여권">Passport</span>
+                </button>
+                <button class="tab-btn flex flex-col items-center hover-effect" data-tab="achievements">
+                    <i class="fas fa-award text-2xl mb-1"></i>
+                    <span data-en="Achievements" data-kr="업적">Achievements</span>
+                </button>
+                <button class="tab-btn flex flex-col items-center hover-effect" data-tab="challenges">
+                    <i class="fas fa-tasks text-2xl mb-1"></i>
+                    <span data-en="Challenges" data-kr="도전 과제">Challenges</span>
+                </button>
+                <button class="tab-btn flex flex-col items-center hover-effect" data-tab="qa">
+                    <i class="fas fa-comments text-2xl mb-1"></i>
+                    <span data-en="Q&A" data-kr="질문">Q&A</span>
+                </button>
+                <button class="tab-btn flex flex-col items-center hover-effect" data-tab="profile">
+                    <i class="fas fa-user text-2xl mb-1"></i>
+                    <span data-en="Profile" data-kr="프로필">Profile</span>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Passport Tab -->
+        <div id="passport" class="tab-content active">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold serif-font" data-en="My Passports" data-kr="나의 여권">My Passports</h2>
+                <button class="flex items-center px-4 py-2 bg-sky-blue text-white rounded-lg btn-effect">
+                    <i class="fas fa-plus mr-2"></i> <span data-en="New Passport" data-kr="새 여권">New Passport</span>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Seoul Passport with Improved Flip Animation -->
+                <div class="passport-container" id="seoulPassportContainer">
+                    <div class="passport" id="seoulPassport">
+                        <!-- Front Side - Cover -->
+                        <div class="passport-front">
+                            <div class="passport-cover relative overflow-hidden">
+                                <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/60555f20-ae77-416f-bdb7-5005ad3a037d_wm" alt="Seoul Tower" class="tower-illustration">
+                                <div class="passport-content">
+                                    <div></div>
+                                    <div class="city-name">
+                                        <h3 class="text-3xl serif-font font-bold mb-1">SEOUL</h3>
+                                        <p class="text-sm" data-en="REPUBLIC OF KOREA" data-kr="대한민국">REPUBLIC OF KOREA</p>
+                                        <p class="text-sm mt-2" data-en="Issued: May 15, 2023" data-kr="발급일: 2023년 5월 15일">Issued: May 15, 2023</p>
+                                        <p class="serif-font">Jaime Sung</p>
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-6 right-6 bg-white bg-opacity-20 px-4 py-2 rounded-full backdrop-filter backdrop-blur-sm text-white text-sm font-medium">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-stamp mr-2"></i>
+                                        <span data-en="24 Stamps" data-kr="24개의 스탬프">24 Stamps</span>
+                                    </div>
+                                </div>
+                                <button class="flip-btn flip-btn-front hover-effect" onclick="flipPassport('seoul')">
+                                    <i class="fas fa-id-card-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Back Side - Identity Page -->
+                        <div class="passport-back">
+                            <div class="identity-page">
+                                <div class="passport-emblem"></div>
+                                <span class="page-indicator">Page 1/4</span>
+                                
+                                <!-- Corner folds for realistic paper look -->
+                                <div class="corner-fold corner-fold-tr"></div>
+                                <div class="corner-fold corner-fold-br"></div>
+                                <div class="corner-fold corner-fold-bl"></div>
+                                
+
+                                <div class="flex mb-6">
+                                    <div class="initial-badge w-36 h-36 flex items-center justify-center mr-6">
+                                        <span class="text-deep-navy text-5xl">JS</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="Full Name" data-kr="성명">Full Name</div>
+                                            <div class="info-value">Jaime Sung</div>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="Passport No." data-kr="여권 번호">Passport No.</div>
+                                            <div class="info-value">SEL-23051500</div>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="City" data-kr="도시">City</div>
+                                            <div class="info-value" data-en="Seoul" data-kr="서울">Seoul</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-3 mb-6">
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Date of Issue" data-kr="발급일">Date of Issue</div>
+                                        <div class="info-value">May 15, 2023</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Explorer Level" data-kr="탐험가 레벨">Explorer Level</div>
+                                        <div class="info-value">
+                                            <div data-en="Adventurer" data-kr="모험가">Adventurer</div>
+                                            <div class="explorer-level">
+                                                <span class="text-xs">Lvl 12</span>
+                                                <div class="explorer-progress">
+                                                    <div class="explorer-progress-fill" style="width: 75%"></div>
+                                                </div>
+                                                <span class="text-xs">Lvl 13</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Languages" data-kr="언어">Languages</div>
+                                        <div class="info-value" data-en="English, Korean" data-kr="영어, 한국어">English, Korean</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Status" data-kr="상태">Status</div>
+                                        <div class="info-value status-active" data-en="Active" data-kr="활성">Active</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Expiration Date" data-kr="만료일">Expiration Date</div>
+                                        <div class="info-value">May 15, 2028</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Passport Authority" data-kr="여권 발급 기관">Passport Authority</div>
+                                        <div class="info-value">Passportr Official</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-row mb-4">
+                                    <div class="info-label" data-en="Signature" data-kr="서명">Signature</div>
+                                    <div class="info-value signature-box">Jaime Sung</div>
+                                </div>
+                                
+                                <div class="view-stamps-prompt">
+                                    <i class="fas fa-arrow-down mr-1"></i> <span data-en="Tap to view stamps" data-kr="스탬프 보기">Tap to view stamps</span>
+                                </div>
+                                
+                                <button class="flip-btn flip-btn-back hover-effect" onclick="flipPassport('seoul')">
+                                    <i class="fas fa-passport"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tokyo Passport with Improved Flip Animation -->
+                <div class="passport-container" id="tokyoPassportContainer">
+                    <div class="passport" id="tokyoPassport">
+                        <!-- Front Side - Cover -->
+                        <div class="passport-front">
+                            <div class="passport-cover relative overflow-hidden">
+                                <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/16717b5e-ca20-420c-b6aa-979fa35bf458_wm" alt="Tokyo Tower" class="tower-illustration">
+                                <div class="passport-content">
+                                    <div></div>
+                                    <div class="city-name">
+                                        <h3 class="text-3xl serif-font font-bold mb-1">TOKYO</h3>
+                                        <p class="text-sm" data-en="JAPAN" data-kr="일본">JAPAN</p>
+                                        <p class="text-sm mt-2" data-en="Issued: Sep 28, 2023" data-kr="발급일: 2023년 9월 28일">Issued: Sep 28, 2023</p>
+                                        <p class="serif-font">Jaime Sung</p>
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-6 right-6 bg-white bg-opacity-20 px-4 py-2 rounded-full backdrop-filter backdrop-blur-sm text-white text-sm font-medium">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-stamp mr-2"></i>
+                                        <span data-en="12 Stamps" data-kr="12개의 스탬프">12 Stamps</span>
+                                    </div>
+                                </div>
+                                <button class="flip-btn flip-btn-front hover-effect" onclick="flipPassport('tokyo')">
+                                    <i class="fas fa-id-card-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Back Side - Identity Page -->
+                        <div class="passport-back">
+                            <div class="identity-page">
+                                <div class="passport-emblem"></div>
+                                <span class="page-indicator">Page 1/4</span>
+                                
+                                <!-- Corner folds for realistic paper look -->
+                                <div class="corner-fold corner-fold-tr"></div>
+                                <div class="corner-fold corner-fold-br"></div>
+                                <div class="corner-fold corner-fold-bl"></div>
+
+                                
+                                <div class="flex mb-6">
+                                    <div class="initial-badge w-36 h-36 flex items-center justify-center mr-6">
+                                        <span class="text-deep-navy text-5xl">JS</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="Full Name" data-kr="성명">Full Name</div>
+                                            <div class="info-value">Jaime Sung</div>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="Passport No." data-kr="여권 번호">Passport No.</div>
+                                            <div class="info-value">TKY-23092800</div>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="info-label" data-en="City" data-kr="도시">City</div>
+                                            <div class="info-value" data-en="Tokyo" data-kr="도쿄">Tokyo</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-3 mb-6">
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Date of Issue" data-kr="발급일">Date of Issue</div>
+                                        <div class="info-value">September 28, 2023</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Explorer Level" data-kr="탐험가 레벨">Explorer Level</div>
+                                        <div class="info-value">
+                                            <div data-en="Adventurer" data-kr="모험가">Adventurer</div>
+                                            <div class="explorer-level">
+                                                <span class="text-xs">Lvl 12</span>
+                                                <div class="explorer-progress">
+                                                    <div class="explorer-progress-fill" style="width: 75%"></div>
+                                                </div>
+                                                <span class="text-xs">Lvl 13</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Languages" data-kr="언어">Languages</div>
+                                        <div class="info-value" data-en="English, Japanese" data-kr="영어, 일본어">English, Japanese</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Status" data-kr="상태">Status</div>
+                                        <div class="info-value status-active" data-en="Active" data-kr="활성">Active</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Expiration Date" data-kr="만료일">Expiration Date</div>
+                                        <div class="info-value">September 28, 2028</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label" data-en="Passport Authority" data-kr="여권 발급 기관">Passport Authority</div>
+                                        <div class="info-value">Passportr Official</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-row mb-4">
+                                    <div class="info-label" data-en="Signature" data-kr="서명">Signature</div>
+                                    <div class="info-value signature-box">Jaime Sung</div>
+                                </div>
+                                
+                                <div class="view-stamps-prompt">
+                                    <i class="fas fa-arrow-down mr-1"></i> <span data-en="Tap to view stamps" data-kr="스탬프 보기">Tap to view stamps</span>
+                                </div>
+                                
+                                <button class="flip-btn flip-btn-back hover-effect" onclick="flipPassport('tokyo')">
+                                    <i class="fas fa-passport"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collection Quests Section -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold serif-font" data-en="Collection Quests" data-kr="컬렉션 퀘스트">Collection Quests</h3>
+                    <button class="text-sky-blue flex items-center hover-effect" onclick="openModal('newCollectionModal')">
+                        <i class="fas fa-plus mr-1"></i> <span data-en="New Collection" data-kr="새 컬렉션">New Collection</span>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Seoul Street Food Collection -->
+                    <div class="collection-quest bg-cloud-white p-4 border border-light-sand">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-bold" data-en="Seoul Street Food Tour" data-kr="서울 길거리 음식 투어">Seoul Street Food Tour</h4>
+                            <span class="text-sunset-coral text-sm font-medium">5/8</span>
+                        </div>
+                        <div class="progress-bar mb-3">
+                            <div class="progress-fill bg-sunset-coral" style="width: 62.5%"></div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 mb-4">
+                            <div class="stamp w-12 h-12 bg-sunset-coral mx-auto"></div>
+                            <div class="stamp w-12 h-12 bg-sunset-coral mx-auto"></div>
+                            <div class="stamp w-12 h-12 bg-sunset-coral mx-auto"></div>
+                            <div class="stamp w-12 h-12 bg-sunset-coral mx-auto"></div>
+                            <div class="stamp w-12 h-12 bg-sunset-coral mx-auto"></div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full py-2 bg-sky-blue bg-opacity-10 text-cloud-white font-medium rounded-lg hover:bg-opacity-20 transition-colors btn-effect" data-en="View Collection" data-kr="컬렉션 보기">
+                            View Collection
+                        </button>
+                    </div>
+                    
+                    <!-- Seoul Historical Sites Collection -->
+                    <div class="collection-quest bg-cloud-white p-4 border border-light-sand">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-bold" data-en="Seoul Historical Sites" data-kr="서울 역사 유적지">Seoul Historical Sites</h4>
+                            <span class="text-sunset-coral text-sm font-medium">2/6</span>
+                        </div>
+                        <div class="progress-bar mb-3">
+                            <div class="progress-fill bg-sunset-coral" style="width: 33.3%"></div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="stamp w-12 h-12 bg-sky-blue mx-auto"></div>
+                            <div class="stamp w-12 h-12 bg-sky-blue mx-auto"></div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-12 h-12 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full py-2 bg-sky-blue bg-opacity-10 text-cloud-white font-medium rounded-lg hover:bg-opacity-20 transition-colors btn-effect" data-en="View Collection" data-kr="컬렉션 보기">
+                            View Collection
+                        </button>
+                    </div>
+                    
+                    <!-- Tokyo Temples Collection -->
+                    <div class="collection-quest bg-cloud-white p-4 border border-light-sand">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-bold" data-en="Tokyo Temples & Shrines" data-kr="도쿄 사원 & 신사">Tokyo Temples & Shrines</h4>
+                            <span class="text-sunset-coral text-sm font-medium">3/7</span>
+                        </div>
+                        <div class="progress-bar mb-3">
+                            <div class="progress-fill bg-sunset-coral" style="width: 42.9%"></div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 mb-4">
+                            <div class="stamp w-10 h-10 bg-sunshine-yellow mx-auto"></div>
+                            <div class="stamp w-10 h-10 bg-sunshine-yellow mx-auto"></div>
+                            <div class="stamp w-10 h-10 bg-sunshine-yellow mx-auto"></div>
+                            <div class="stamp w-10 h-10 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-10 h-10 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-10 h-10 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="stamp w-10 h-10 badge-locked mx-auto">
+                                <div class="w-full h-full bg-stone-gray flex items-center justify-center">
+                                    <i class="fas fa-lock text-cloud-white text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full py-2 bg-sky-blue bg-opacity-10 text-cloud-white font-medium rounded-lg hover:bg-opacity-20 transition-colors btn-effect" data-en="View Collection" data-kr="컬렉션 보기">
+                            View Collection
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Streak Section -->
+            <div class="bg-light-sand rounded-xl p-6 mb-12">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold serif-font" data-en="Current Streak" data-kr="현재 연속 기록">Current Streak</h3>
+                        <p class="text-stone-gray" data-en="You're on a roll! Keep it up!" data-kr="연속 기록 중입니다! 계속 유지하세요!">You're on a roll! Keep it up!</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="bg-sky-blue w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-fire text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-stone-gray" data-en="Current Streak" data-kr="현재 연속">Current Streak</p>
+                            <p class="text-2xl font-bold" data-en="14 Days" data-kr="14일">14 Days</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap justify-center mb-4">
+                    <div class="calendar-day bg-sky-blue text-white">M</div>
+                    <div class="calendar-day bg-sky-blue text-white">T</div>
+                    <div class="calendar-day bg-sky-blue text-white">W</div>
+                    <div class="calendar-day bg-sky-blue text-white">T</div>
+                    <div class="calendar-day bg-sky-blue text-white">F</div>
+                    <div class="calendar-day bg-sky-blue text-white">S</div>
+                    <div class="calendar-day bg-sky-blue text-white">S</div>
+                    <div class="calendar-day bg-sky-blue text-white">M</div>
+                    <div class="calendar-day bg-sky-blue text-white">T</div>
+                    <div class="calendar-day bg-sky-blue text-white">W</div>
+                    <div class="calendar-day bg-sky-blue text-white">T</div>
+                    <div class="calendar-day bg-sky-blue text-white">F</div>
+                    <div class="calendar-day bg-sky-blue text-white">S</div>
+                    <div class="calendar-day bg-sky-blue text-white">S</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">M</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">T</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">W</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">T</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">F</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">S</div>
+                    <div class="calendar-day bg-cloud-white text-stone-gray">S</div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-stone-gray mb-1" data-en="Streak Protection" data-kr="연속 기록 보호">Streak Protection</p>
+                        <div class="flex">
+                            <div class="w-8 h-8 bg-sunset-coral rounded-full flex items-center justify-center mr-1">
+                                <i class="fas fa-shield-alt text-white text-xs"></i>
+                            </div>
+                            <div class="w-8 h-8 bg-sunset-coral rounded-full flex items-center justify-center mr-1">
+                                <i class="fas fa-shield-alt text-white text-xs"></i>
+                            </div>
+                            <div class="w-8 h-8 bg-sunset-coral rounded-full flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-white text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Achievement System Tab -->
+        <div id="achievements" class="tab-content">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold serif-font" data-en="Achievements" data-kr="업적">Achievements</h2>
+                    <p class="text-stone-gray" data-en="Track your progress and unlock special rewards" data-kr="진행 상황을 추적하고 특별한 보상을 해제하세요">Track your progress and unlock special rewards</p>
+                </div>
+                <div class="flex items-center bg-light-sand px-4 py-2 rounded-full">
+                    <span class="mr-2 font-medium" data-en="Total Achievements:" data-kr="총 업적:">Total Achievements:</span>
+                    <span class="text-sky-blue font-bold">28/75</span>
+                </div>
+            </div>
+            
+            <div class="mb-8">
+                <div class="passport-tabs">
+                    <div class="passport-tab active" data-achievement-category="all" data-en="All" data-kr="전체">All</div>
+                    <div class="passport-tab" data-achievement-category="explorer" data-en="Explorer" data-kr="탐험가">Explorer</div>
+                    <div class="passport-tab" data-achievement-category="collector" data-en="Collector" data-kr="수집가">Collector</div>
+                    <div class="passport-tab" data-achievement-category="social" data-en="Social" data-kr="소셜">Social</div>
+                    <div class="passport-tab" data-achievement-category="streak" data-en="Streak" data-kr="연속">Streak</div>
+                </div>
+                
+                <div class="bg-cloud-white rounded-lg p-6 border border-light-sand">
+                    <h3 class="text-xl font-bold serif-font mb-4" data-en="Explorer Achievements" data-kr="탐험가 업적">Explorer Achievements</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <!-- First Visit Achievement -->
+                        <div class="flex items-center bg-light-sand bg-opacity-50 p-3 rounded-lg">
+                            <div class="achievement-badge bg-sky-blue mr-4 flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-white text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <h4 class="font-bold" data-en="First Steps" data-kr="첫 걸음">First Steps</h4>
+                                    <span class="text-sunset-coral" data-en="Completed" data-kr="완료">Completed</span>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-2" data-en="Make your first check-in at any location" data-kr="어떤 장소에서든 첫 체크인하기">Make your first check-in at any location</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-sunset-coral" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seoul Explorer Achievement -->
+                        <div class="flex items-center bg-light-sand bg-opacity-50 p-3 rounded-lg">
+                            <div class="achievement-badge bg-sky-blue mr-4 flex items-center justify-center">
+                                <i class="fas fa-mountain text-white text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <h4 class="font-bold" data-en="Seoul Explorer" data-kr="서울 탐험가">Seoul Explorer</h4>
+                                    <span class="text-sunset-coral">18/25</span>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-2" data-en="Visit 25 different locations in Seoul" data-kr="서울의 25개 다른 장소 방문하기">Visit 25 different locations in Seoul</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-sunset-coral" style="width: 72%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Cultural Enthusiast Achievement -->
+                        <div class="flex items-center bg-light-sand bg-opacity-50 p-3 rounded-lg">
+                            <div class="achievement-badge bg-sky-blue mr-4 flex items-center justify-center">
+                                <i class="fas fa-torii-gate text-white text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <h4 class="font-bold" data-en="Cultural Enthusiast" data-kr="문화 애호가">Cultural Enthusiast</h4>
+                                    <span class="text-sunset-coral">7/15</span>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-2" data-en="Visit 15 cultural or historical sites" data-kr="15개의 문화 또는 역사 유적지 방문하기">Visit 15 cultural or historical sites</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-sunset-coral" style="width: 46.6%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Foodie Achievement -->
+                        <div class="flex items-center bg-light-sand bg-opacity-50 p-3 rounded-lg">
+                            <div class="achievement-badge bg-sky-blue mr-4 flex items-center justify-center">
+                                <i class="fas fa-utensils text-white text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <h4 class="font-bold" data-en="Food Connoisseur" data-kr="음식 감정가">Food Connoisseur</h4>
+                                    <span class="text-sunset-coral">12/20</span>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-2" data-en="Try 20 different restaurants or cafes" data-kr="20개의 다른 식당이나 카페 방문하기">Try 20 different restaurants or cafes</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-sunset-coral" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold serif-font mb-4" data-en="Achievement Tiers" data-kr="업적 등급">Achievement Tiers</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-light-sand flex items-center justify-center">
+                                <i class="fas fa-seedling text-deep-navy text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Novice" data-kr="초보자">Novice</p>
+                            <p class="text-xs text-stone-gray" data-en="Completed" data-kr="완료">Completed</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-sky-blue flex items-center justify-center">
+                                <i class="fas fa-compass text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Explorer" data-kr="탐험가">Explorer</p>
+                            <p class="text-xs text-stone-gray" data-en="Current" data-kr="현재">Current</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-stone-gray flex items-center justify-center badge-locked">
+                                <i class="fas fa-hiking text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Adventurer" data-kr="모험가">Adventurer</p>
+                            <p class="text-xs text-stone-gray" data-en="Level 15 Required" data-kr="레벨 15 필요">Level 15 Required</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-stone-gray flex items-center justify-center badge-locked">
+                                <i class="fas fa-route text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Trailblazer" data-kr="개척자">Trailblazer</p>
+                            <p class="text-xs text-stone-gray" data-en="Level 20 Required" data-kr="레벨 20 필요">Level 20 Required</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-stone-gray flex items-center justify-center badge-locked">
+                                <i class="fas fa-crown text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Legend" data-kr="전설">Legend</p>
+                            <p class="text-xs text-stone-gray" data-en="Level 30 Required" data-kr="레벨 30 필요">Level 30 Required</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold serif-font mb-4" data-en="Recent Unlocks" data-kr="최근 해제">Recent Unlocks</h3>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-sunset-coral flex items-center justify-center">
+                                <i class="fas fa-coffee text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Cafe Hopper" data-kr="카페 여행자">Cafe Hopper</p>
+                            <p class="text-xs text-stone-gray" data-en="3 days ago" data-kr="3일 전">3 days ago</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-sunshine-yellow flex items-center justify-center">
+                                <i class="fas fa-calendar-check text-deep-navy text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Weekly Warrior" data-kr="주간 전사">Weekly Warrior</p>
+                            <p class="text-xs text-stone-gray" data-en="5 days ago" data-kr="5일 전">5 days ago</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-sky-blue flex items-center justify-center">
+                                <i class="fas fa-comments text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Helpful Guide" data-kr="도움이 되는 가이드">Helpful Guide</p>
+                            <p class="text-xs text-stone-gray" data-en="1 week ago" data-kr="1주일 전">1 week ago</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="achievement-badge mx-auto bg-deep-navy flex items-center justify-center">
+                                <i class="fas fa-moon text-white text-2xl"></i>
+                            </div>
+                            <p class="font-medium mt-2" data-en="Night Explorer" data-kr="야간 탐험가">Night Explorer</p>
+                            <p class="text-xs text-stone-gray" data-en="2 weeks ago" data-kr="2주일 전">2 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-light-sand rounded-xl p-6">
+                <h3 class="text-xl font-bold serif-font mb-4" data-en="Achievement Statistics" data-kr="업적 통계">Achievement Statistics</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="Total Achievements" data-kr="총 업적">Total Achievements</p>
+                        <p class="text-2xl font-bold">28 <span class="text-stone-gray text-lg font-normal">/ 75</span></p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="Completion Rate" data-kr="완료율">Completion Rate</p>
+                        <p class="text-2xl font-bold">37%</p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="XP from Achievements" data-kr="업적으로부터 얻은 XP">XP from Achievements</p>
+                        <p class="text-2xl font-bold">3,450</p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="Badges Earned" data-kr="획득한 배지">Badges Earned</p>
+                        <p class="text-2xl font-bold">12</p>
+                    </div>
+                </div>
+                
+                <div class="bg-cloud-white p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold" data-en="Achievement Categories" data-kr="업적 카테고리">Achievement Categories</h4>
+                        <div class="text-sm text-stone-gray" data-en="% Complete" data-kr="% 완료">% Complete</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span data-en="Explorer" data-kr="탐험가">Explorer</span>
+                            <span class="text-sky-blue">64%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-sky-blue" style="width: 64%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span data-en="Collector" data-kr="수집가">Collector</span>
+                            <span class="text-sunset-coral">42%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-sunset-coral" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span data-en="Social" data-kr="소셜">Social</span>
+                            <span class="text-sunshine-yellow">28%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-sunshine-yellow" style="width: 28%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span data-en="Streak" data-kr="연속">Streak</span>
+                            <span class="text-deep-navy">53%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-deep-navy" style="width: 53%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Challenges Tab -->
+        <div id="challenges" class="tab-content">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold serif-font" data-en="Challenges" data-kr="도전 과제">Challenges</h2>
+                    <p class="text-stone-gray" data-en="Complete challenges to earn rewards and XP" data-kr="도전 과제를 완료하고 보상과 XP를 획득하세요">Complete challenges to earn rewards and XP</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-4 py-2 bg-sky-blue text-white rounded-lg btn-effect">
+                        <i class="fas fa-sync-alt mr-1"></i> <span data-en="Refresh" data-kr="새로고침">Refresh</span>
+                    </button>
+                    <button class="px-4 py-2 bg-light-sand text-deep-navy rounded-lg btn-effect">
+                        <i class="fas fa-filter mr-1"></i> <span data-en="Filter" data-kr="필터">Filter</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="passport-tabs mb-6">
+                <div class="passport-tab active" data-challenge-category="daily" data-en="Daily" data-kr="일일">Daily</div>
+                <div class="passport-tab" data-challenge-category="weekly" data-en="Weekly" data-kr="주간">Weekly</div>
+                <div class="passport-tab" data-challenge-category="city" data-en="City-Specific" data-kr="도시별">City-Specific</div>
+                <div class="passport-tab" data-challenge-category="special" data-en="Special Events" data-kr="특별 이벤트">Special Events</div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Daily Challenge 1 -->
+                <div class="challenge-card bg-cloud-white p-4 border border-light-sand">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-sky-blue rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-coffee text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Visit a café today" data-kr="오늘 카페 방문하기">Visit a café today</h4>
+                                <p class="text-sm text-stone-gray" data-en="Check in at any café in Seoul" data-kr="서울의 어떤 카페에서든 체크인하세요">Check in at any café in Seoul</p>
+                            </div>
+                        </div>
+                        <div class="bg-sunshine-yellow text-deep-navy text-xs font-bold px-2 py-1 rounded">
+                            <span data-en="DAILY" data-kr="일일">DAILY</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Progress" data-kr="진행">Progress</p>
+                            <div class="flex items-center">
+                                <div class="progress-bar w-32 mr-3">
+                                    <div class="progress-fill bg-sky-blue" style="width: 0%"></div>
+                                </div>
+                                <span class="text-sm">0/1</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Time Left" data-kr="남은 시간">Time Left</p>
+                            <p class="font-medium" data-en="8 hours" data-kr="8시간">8 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-sky-blue rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-bolt text-white text-sm"></i>
+                            </div>
+                            <span class="font-medium">+50 XP</span>
+                        </div>
+                        <button class="px-4 py-2 bg-sunset-coral text-white rounded-lg btn-effect" onclick="openModal('challengeCompletedModal')" data-en="Start Challenge" data-kr="도전 시작">
+                            Start Challenge
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Daily Challenge 2 -->
+                <div class="challenge-card bg-cloud-white p-4 border border-light-sand">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-sky-blue rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-camera text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Capture a landmark" data-kr="랜드마크 촬영하기">Capture a landmark</h4>
+                                <p class="text-sm text-stone-gray" data-en="Check in at any famous landmark" data-kr="유명한 랜드마크에서 체크인하세요">Check in at any famous landmark</p>
+                            </div>
+                        </div>
+                        <div class="bg-sunshine-yellow text-deep-navy text-xs font-bold px-2 py-1 rounded">
+                            <span data-en="DAILY" data-kr="일일">DAILY</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Progress" data-kr="진행">Progress</p>
+                            <div class="flex items-center">
+                                <div class="progress-bar w-32 mr-3">
+                                    <div class="progress-fill bg-sky-blue" style="width: 0%"></div>
+                                </div>
+                                <span class="text-sm">0/1</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Time Left" data-kr="남은 시간">Time Left</p>
+                            <p class="font-medium" data-en="8 hours" data-kr="8시간">8 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-sky-blue rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-bolt text-white text-sm"></i>
+                            </div>
+                            <span class="font-medium">+75 XP</span>
+                        </div>
+                        <button class="px-4 py-2 bg-sunset-coral text-white rounded-lg btn-effect" data-en="Start Challenge" data-kr="도전 시작">
+                            Start Challenge
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Weekly Challenge -->
+                <div class="challenge-card bg-cloud-white p-4 border border-light-sand">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-sunset-coral rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-utensils text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Seoul Street Food Explorer" data-kr="서울 길거리 음식 탐험가">Seoul Street Food Explorer</h4>
+                                <p class="text-sm text-stone-gray" data-en="Visit 5 street food locations in Seoul" data-kr="서울의 5개 길거리 음식점 방문하기">Visit 5 street food locations in Seoul</p>
+                            </div>
+                        </div>
+                        <div class="bg-sky-blue text-white text-xs font-bold px-2 py-1 rounded">
+                            <span data-en="WEEKLY" data-kr="주간">WEEKLY</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Progress" data-kr="진행">Progress</p>
+                            <div class="flex items-center">
+                                <div class="progress-bar w-32 mr-3">
+                                    <div class="progress-fill bg-sunset-coral" style="width: 40%"></div>
+                                </div>
+                                <span class="text-sm">2/5</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Time Left" data-kr="남은 시간">Time Left</p>
+                            <p class="font-medium" data-en="4 days" data-kr="4일">4 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-sunset-coral rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-bolt text-white text-sm"></i>
+                                </div>
+                                <span class="font-medium">+150 XP</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-sunshine-yellow rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-medal text-deep-navy text-sm"></i>
+                                </div>
+                                <span class="font-medium" data-en="Badge" data-kr="배지">Badge</span>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 bg-sunset-coral text-white rounded-lg btn-effect" data-en="Continue" data-kr="계속하기">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- City Challenge -->
+                <div class="challenge-card bg-cloud-white p-4 border border-light-sand">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-deep-navy rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-torii-gate text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Seoul Royal Palace Tour" data-kr="서울 왕궁 투어">Seoul Royal Palace Tour</h4>
+                                <p class="text-sm text-stone-gray" data-en="Visit all 5 royal palaces in Seoul" data-kr="서울의 5대 왕궁 모두 방문하기">Visit all 5 royal palaces in Seoul</p>
+                            </div>
+                        </div>
+                        <div class="bg-deep-navy text-white text-xs font-bold px-2 py-1 rounded">
+                            <span data-en="SEOUL" data-kr="서울">SEOUL</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Progress" data-kr="진행">Progress</p>
+                            <div class="flex items-center">
+                                <div class="progress-bar w-32 mr-3">
+                                    <div class="progress-fill bg-deep-navy" style="width: 20%"></div>
+                                </div>
+                                <span class="text-sm">1/5</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-stone-gray mb-1" data-en="Difficulty" data-kr="난이도">Difficulty</p>
+                            <div class="flex">
+                                <i class="fas fa-star text-sunshine-yellow"></i>
+                                <i class="fas fa-star text-sunshine-yellow"></i>
+                                <i class="fas fa-star text-sunshine-yellow"></i>
+                                <i class="fas fa-star text-stone-gray"></i>
+                                <i class="fas fa-star text-stone-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-sunset-coral rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-bolt text-white text-sm"></i>
+                                </div>
+                                <span class="font-medium">+500 XP</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-sunshine-yellow rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-crown text-deep-navy text-sm"></i>
+                                </div>
+                                <span class="font-medium" data-en="Special Stamp" data-kr="특별 스탬프">Special Stamp</span>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 bg-deep-navy text-white rounded-lg btn-effect" data-en="View Details" data-kr="세부 정보 보기">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-light-sand rounded-xl p-6">
+                <h3 class="text-xl font-bold serif-font mb-4" data-en="Challenge Statistics" data-kr="도전 과제 통계">Challenge Statistics</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="Completed Today" data-kr="오늘 완료">Completed Today</p>
+                        <p class="text-2xl font-bold">1 <span class="text-stone-gray text-lg font-normal">/ 3</span></p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="This Week" data-kr="이번 주">This Week</p>
+                        <p class="text-2xl font-bold">5 <span class="text-stone-gray text-lg font-normal">/ 10</span></p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="Total Completed" data-kr="총 완료">Total Completed</p>
+                        <p class="text-2xl font-bold">47</p>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg text-center">
+                        <p class="text-sm text-stone-gray mb-1" data-en="XP Earned from Challenges" data-kr="도전 과제로 획득한 XP">XP Earned from Challenges</p>
+                        <p class="text-2xl font-bold">2,350</p>
+                    </div>
+                </div>
+                
+                <h4 class="font-bold mb-3" data-en="Coming Soon" data-kr="출시 예정">Coming Soon</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-cloud-white p-4 rounded-lg flex items-center opacity-70">
+                        <div class="w-12 h-12 bg-stone-gray rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-moon text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold" data-en="Seoul Night Markets" data-kr="서울 야시장">Seoul Night Markets</h4>
+                            <p class="text-sm text-stone-gray" data-en="Unlocks in 3 days" data-kr="3일 후 해제">Unlocks in 3 days</p>
+                        </div>
+                    </div>
+                    <div class="bg-cloud-white p-4 rounded-lg flex items-center opacity-70">
+                        <div class="w-12 h-12 bg-stone-gray rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-fish text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold" data-en="Tokyo Fish Market Challenge" data-kr="도쿄 어시장 도전">Tokyo Fish Market Challenge</h4>
+                            <p class="text-sm text-stone-gray" data-en="Unlocks in 5 days" data-kr="5일 후 해제">Unlocks in 5 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Q&A Tab -->
+        <div id="qa" class="tab-content">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold serif-font" data-en="Q&A Forum" data-kr="질문 & 답변 포럼">Q&A Forum</h2>
+                    <p class="text-stone-gray" data-en="Ask questions and share your knowledge" data-kr="질문하고 지식을 공유하세요">Ask questions and share your knowledge</p>
+                </div>
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <div class="language-toggle">
+                            <div class="language-option qa-en active" onclick="switchQALanguage('en')">EN</div>
+                            <div class="language-option qa-kr" onclick="switchQALanguage('kr')">KR</div>
+                            <div class="language-slider qa-slider" style="width: 36px;"></div>
+                        </div>
+                    </div>
+                    <button class="px-4 py-2 bg-sunset-coral text-white rounded-lg btn-effect">
+                        <i class="fas fa-plus mr-1"></i> <span data-en="Ask Question" data-kr="질문하기">Ask Question</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex mb-6">
+                <div class="relative w-full">
+                    <input type="text" placeholder="Search questions..." class="w-full px-4 py-3 rounded-lg border border-light-sand focus:outline-none focus:border-sky-blue transition-colors" data-en-placeholder="Search questions..." data-kr-placeholder="질문 검색...">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 hover-effect">
+                        <i class="fas fa-search text-stone-gray"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="passport-tabs mb-6">
+                <div class="passport-tab active" data-qa-filter="trending" data-en="Trending" data-kr="인기">Trending</div>
+                <div class="passport-tab" data-qa-filter="recent" data-en="Recent" data-kr="최근">Recent</div>
+                <div class="passport-tab" data-qa-filter="unanswered" data-en="Unanswered" data-kr="미답변">Unanswered</div>
+                <div class="passport-tab" data-qa-filter="mystuff" data-en="My Questions" data-kr="내 질문">My Questions</div>
+            </div>
+            
+            <div class="mb-12">
+                <!-- Question 1 -->
+                <div class="bg-cloud-white p-4 rounded-lg border border-light-sand mb-4">
+                    <div class="flex items-start mb-3">
+                        <div class="w-10 h-10 bg-light-sand rounded-full flex items-center justify-center mr-3">
+                            <span class="text-deep-navy font-medium text-sm">TK</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold mb-1" data-en="Best street food markets in Seoul?" data-kr="서울의 최고 길거리 음식 시장은?">Best street food markets in Seoul?</h4>
+                            <p class="text-stone-gray mb-3" data-en="I'm visiting Seoul next week and want to try authentic street food. Which markets would you recommend for the best experience?" data-kr="다음 주에 서울을 방문할 예정인데 정통 길거리 음식을 먹어보고 싶습니다. 최고의 경험을 위해 어떤 시장을 추천하시나요?">I'm visiting Seoul next week and want to try authentic street food. Which markets would you recommend for the best experience?</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Seoul" data-kr="서울">Seoul</span>
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Food" data-kr="음식">Food</span>
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Markets" data-kr="시장">Markets</span>
+                            </div>
+                            <div class="flex items-center text-sm text-stone-gray">
+                                <span data-en="5 answers" data-kr="5개의 답변">5 answers</span>
+                                <span class="mx-2">•</span>
+                                <span data-en="Asked 2 days ago" data-kr="2일 전에 질문">Asked 2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center ml-4">
+                            <div class="w-10 h-10 bg-sky-blue bg-opacity-10 rounded-lg flex items-center justify-center mb-1 hover-effect">
+                                <i class="fas fa-arrow-up text-sky-blue"></i>
+                            </div>
+                            <span class="font-medium">23</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ml-13 pl-13">
+                        <div class="border-l-2 border-light-sand pl-4 ml-6">
+                            <div class="flex items-start mb-3">
+                                <div class="w-8 h-8 bg-light-sand rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-deep-navy font-medium text-xs">JS</span>
+                                </div>
+                                <div>
+                                    <p class="mb-1" data-en="Definitely check out Gwangjang Market! It's one of the oldest and most famous markets with amazing food stalls. Try the mung bean pancakes and kimbap." data-kr="광장시장을 꼭 가보세요! 가장 오래되고 유명한 시장 중 하나로 맛있는 음식 노점이 많습니다. 녹두전과 김밥을 꼭 드셔보세요.">Definitely check out Gwangjang Market! It's one of the oldest and most famous markets with amazing food stalls. Try the mung bean pancakes and kimbap.</p>
+                                    <div class="flex items-center text-xs text-stone-gray">
+                                        <span data-en="2 days ago" data-kr="2일 전">2 days ago</span>
+                                        <div class="flex items-center ml-3 hover-effect">
+                                            <i class="fas fa-arrow-up text-sky-blue mr-1"></i>
+                                            <span>12</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-3 pt-3 border-t border-light-sand">
+                        <button class="text-sky-blue flex items-center hover-effect">
+                            <i class="fas fa-reply mr-1"></i> <span data-en="Answer" data-kr="답변하기">Answer</span>
+                        </button>
+                        <div class="flex items-center">
+                            <button class="mr-3 text-stone-gray hover:text-deep-navy transition-colors hover-effect">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                            <button class="text-stone-gray hover:text-deep-navy transition-colors hover-effect">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="bg-cloud-white p-4 rounded-lg border border-light-sand mb-4">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-light-sand rounded-full flex items-center justify-center mr-3">
+                            <span class="text-deep-navy font-medium text-sm">LM</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold mb-1" data-en="Best time to visit Tokyo Tower?" data-kr="도쿄타워를 방문하기 가장 좋은 시간은?">Best time to visit Tokyo Tower?</h4>
+                            <p class="text-stone-gray mb-3" data-en="I want to avoid crowds but still get a good view. Any recommendations on the best time to visit Tokyo Tower?" data-kr="혼잡함을 피하면서도 좋은 전망을 즐기고 싶습니다. 도쿄타워를 방문하기 가장 좋은 시간에 대한 추천이 있을까요?">I want to avoid crowds but still get a good view. Any recommendations on the best time to visit Tokyo Tower?</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Tokyo" data-kr="도쿄">Tokyo</span>
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Landmarks" data-kr="명소">Landmarks</span>
+                            </div>
+                            <div class="flex items-center text-sm text-stone-gray">
+                                <span data-en="3 answers" data-kr="3개의 답변">3 answers</span>
+                                <span class="mx-2">•</span>
+                                <span data-en="Asked 1 week ago" data-kr="1주일 전에 질문">Asked 1 week ago</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center ml-4">
+                            <div class="w-10 h-10 bg-sky-blue bg-opacity-10 rounded-lg flex items-center justify-center mb-1 hover-effect">
+                                <i class="fas fa-arrow-up text-sky-blue"></i>
+                            </div>
+                            <span class="font-medium">16</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Question 3 -->
+                <div class="bg-cloud-white p-4 rounded-lg border border-light-sand">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-sky-blue rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-medium text-sm">JS</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center mb-1">
+                                <h4 class="font-bold" data-en="Hidden gems in Hongdae area?" data-kr="홍대 지역의 숨겨진 명소들?">Hidden gems in Hongdae area?</h4>
+                                <span class="ml-2 bg-sunshine-yellow text-deep-navy text-xs px-2 py-0.5 rounded-full" data-en="Your Question" data-kr="내 질문">Your Question</span>
+                            </div>
+                            <p class="text-stone-gray mb-3" data-en="I've been to the main streets in Hongdae, but I'm looking for some hidden cafes or shops that tourists might not know about." data-kr="홍대 메인 거리는 가봤는데, 관광객들이 잘 모르는 숨겨진 카페나 상점을 찾고 있습니다.">I've been to the main streets in Hongdae, but I'm looking for some hidden cafes or shops that tourists might not know about.</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Seoul" data-kr="서울">Seoul</span>
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Hongdae" data-kr="홍대">Hongdae</span>
+                                <span class="bg-light-sand px-2 py-1 rounded-full text-xs font-medium" data-en="Local Tips" data-kr="현지인 팁">Local Tips</span>
+                            </div>
+                            <div class="flex items-center text-sm text-stone-gray">
+                                <span data-en="2 answers" data-kr="2개의 답변">2 answers</span>
+                                <span class="mx-2">•</span>
+                                <span data-en="Asked 3 days ago" data-kr="3일 전에 질문">Asked 3 days ago</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center ml-4">
+                            <div class="w-10 h-10 bg-sky-blue bg-opacity-10 rounded-lg flex items-center justify-center mb-1 hover-effect">
+                                <i class="fas fa-arrow-up text-sky-blue"></i>
+                            </div>
+                            <span class="font-medium">8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-light-sand rounded-xl p-6">
+                <h3 class="text-xl font-bold serif-font mb-4" data-en="Q&A Stats & Rewards" data-kr="질문 & 답변 통계 및 보상">Q&A Stats & Rewards</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-cloud-white p-4 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-sunset-coral rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-question text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Questions Asked" data-kr="질문한 수">Questions Asked</h4>
+                                <p class="text-2xl font-bold">5</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-stone-gray" data-en="Engagement Rate" data-kr="참여율">Engagement Rate</span>
+                            <span class="font-medium">85%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cloud-white p-4 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-sky-blue rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-comment-dots text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Answers Given" data-kr="답변한 수">Answers Given</h4>
+                                <p class="text-2xl font-bold">12</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-stone-gray" data-en="Helpful Votes" data-kr="도움됨 투표">Helpful Votes</span>
+                            <span class="font-medium">38</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cloud-white p-4 rounded-lg">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-sunshine-yellow rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-trophy text-deep-navy text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold" data-en="Q&A Points" data-kr="Q&A 포인트">Q&A Points</h4>
+                                <p class="text-2xl font-bold">256</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-stone-gray" data-en="Next Reward at" data-kr="다음 보상">Next Reward at</span>
+                            <span class="font-medium">300 pts</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 class="font-bold mb-3" data-en="Your Q&A Badges" data-kr="당신의 Q&A 배지">Your Q&A Badges</h4>
+                
+                <div class="flex flex-wrap gap-4">
+                    <div class="text-center">
+                        <div class="achievement-badge mx-auto bg-sky-blue flex items-center justify-center">
+                            <i class="fas fa-comments text-white text-2xl"></i>
+                        </div>
+                        <p class="font-medium mt-2" data-en="Helpful Guide" data-kr="도움이 되는 가이드">Helpful Guide</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="achievement-badge mx-auto bg-sunset-coral flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <p class="font-medium mt-2" data-en="Knowledge Sharer" data-kr="지식 공유자">Knowledge Sharer</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="achievement-badge mx-auto bg-stone-gray flex items-center justify-center badge-locked">
+                            <i class="fas fa-lock text-white text-xl"></i>
+                        </div>
+                        <p class="font-medium mt-2" data-en="Community Guru" data-kr="커뮤니티 구루">Community Guru</p>
+                        <p class="text-xs text-stone-gray" data-en="25 answers needed" data-kr="25개의 답변 필요">25 answers needed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profile Tab -->
+        <div id="profile" class="tab-content">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold serif-font" data-en="My Profile" data-kr="내 프로필">My Profile</h2>
+                <button class="px-4 py-2 bg-sky-blue text-white rounded-lg btn-effect">
+                    <i class="fas fa-cog mr-1"></i> <span data-en="Settings" data-kr="설정">Settings</span>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="col-span-1">
+                    <div class="bg-cloud-white rounded-lg p-6 border border-light-sand mb-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-light-sand rounded-full flex items-center justify-center mb-4">
+                                <span class="text-deep-navy text-3xl font-medium">JS</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-1">Jaime Sung</h3>
+                            <p class="text-stone-gray mb-4" data-en="Joined May 2023" data-kr="2023년 5월 가입">Joined May 2023</p>
+                            <div class="flex justify-center mb-4">
+                                <div class="level-badge bg-sky-blue text-white flex items-center justify-center mr-2">
+                                    12
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium" data-en="Explorer Level" data-kr="탐험가 레벨">Explorer Level</p>
+                                    <p class="text-sm text-stone-gray">4,250 / 5,000 XP</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar w-full mb-4">
+                                <div class="progress-fill bg-sky-blue" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-3 border-b border-light-sand">
+                            <span data-en="Passports" data-kr="여권">Passports</span>
+                            <span class="font-medium">2</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-light-sand">
+                            <span data-en="Total Stamps" data-kr="총 스탬프">Total Stamps</span>
+                            <span class="font-medium">36</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-light-sand">
+                            <span data-en="Achievements" data-kr="업적">Achievements</span>
+                            <span class="font-medium">28</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3 border-b border-light-sand">
+                            <span data-en="Current Streak" data-kr="현재 연속">Current Streak</span>
+                            <span class="font-medium text-sunset-coral">14 days</span>
+                        </div>
+                        <div class="flex justify-between items-center py-3">
+                            <span data-en="Friends" data-kr="친구">Friends</span>
+                            <span class="font-medium">8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cloud-white rounded-lg p-6 border border-light-sand">
+                        <h3 class="font-bold mb-4" data-en="My Preferences" data-kr="내 환경설정">My Preferences</h3>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span data-en="Notification Settings" data-kr="알림 설정">Notification Settings</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p class="text-sm text-stone-gray" data-en="Receive push notifications for challenges and events" data-kr="도전 과제 및 이벤트에 대한 푸시 알림 받기">Receive push notifications for challenges and events</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span data-en="Language Preference" data-kr="언어 환경설정">Language Preference</span>
+                                <div class="language-toggle">
+                                    <div class="language-option en active" onclick="switchLanguage('en')">EN</div>
+                                    <div class="language-option kr" onclick="switchLanguage('kr')">KR</div>
+                                    <div class="language-slider" style="width: 36px;"></div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-stone-gray" data-en="Set your preferred language for the app" data-kr="앱의 선호 언어 설정">Set your preferred language for the app</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span data-en="Distance Unit" data-kr="거리 단위">Distance Unit</span>
+                                <select class="bg-light-sand px-3 py-1 rounded-lg text-sm">
+                                    <option data-en="Kilometers" data-kr="킬로미터">Kilometers</option>
+                                    <option data-en="Miles" data-kr="마일">Miles</option>
+                                </select>
+                            </div>
+                            <p class="text-sm text-stone-gray" data-en="Set your preferred distance unit" data-kr="선호하는 거리 단위 설정">Set your preferred distance unit</p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span data-en="Dark Mode" data-kr="다크 모드">Dark Mode</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p class="text-sm text-stone-gray" data-en="Switch between light and dark theme" data-kr="밝은 테마와 어두운 테마 전환">Switch between light and dark theme</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-span-2">
+                    <div class="bg-cloud-white rounded-lg p-6 border border-light-sand mb-6">
+                        <h3 class="font-bold mb-4" data-en="Activity Summary" data-kr="활동 요약">Activity Summary</h3>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="bg-light-sand p-3 rounded-lg text-center">
+                                <div class="w-10 h-10 bg-sky-blue rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-map-marked-alt text-white"></i>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-1" data-en="Places Visited" data-kr="방문한 장소">Places Visited</p>
+                                <p class="text-xl font-bold">42</p>
+                            </div>
+                            <div class="bg-light-sand p-3 rounded-lg text-center">
+                                <div class="w-10 h-10 bg-sunset-coral rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-tasks text-white"></i>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-1" data-en="Challenges Completed" data-kr="완료한 도전 과제">Challenges Completed</p>
+                                <p class="text-xl font-bold">47</p>
+                            </div>
+                            <div class="bg-light-sand p-3 rounded-lg text-center">
+                                <div class="w-10 h-10 bg-sunshine-yellow rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-bolt text-deep-navy"></i>
+                                </div>
+                                <p class="text-sm text-stone-gray mb-1" data-en="Total XP Earned" data-kr="획득한 총 XP">Total XP Earned</p>
+                                <p class="text-xl font-bold">4,250</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-bold mb-3" data-en="Activity Timeline" data-kr="활동 타임라인">Activity Timeline</h4>
+                        
+                        <div class="border-l-2 border-light-sand pl-4 ml-2">
+                            <div class="relative mb-6">
+                                <div class="absolute -left-6 w-4 h-4 bg-sunset-coral rounded-full border-2 border-white"></div>
+                                <div class="mb-1">
+                                    <span class="font-medium" data-en="Completed Challenge" data-kr="도전 과제 완료">Completed Challenge</span>
+                                    <span class="text-sm text-stone-gray ml-2" data-en="Today" data-kr="오늘">Today</span>
+                                </div>
+                                <p data-en="Completed 'Visit a café today' challenge in Seoul" data-kr="서울에서 '오늘 카페 방문하기' 도전 과제 완료">Completed "Visit a café today" challenge in Seoul</p>
+                            </div>
+                            
+                            <div class="relative mb-6">
+                                <div class="absolute -left-6 w-4 h-4 bg-sky-blue rounded-full border-2 border-white"></div>
+                                <div class="mb-1">
+                                    <span class="font-medium" data-en="Added Stamp" data-kr="스탬프 추가">Added Stamp</span>
+                                    <span class="text-sm text-stone-gray ml-2" data-en="Yesterday" data-kr="어제">Yesterday</span>
+                                </div>
+                                <p data-en="Checked in at Namsan Tower in Seoul" data-kr="서울 남산타워에서 체크인">Checked in at Namsan Tower in Seoul</p>
+                            </div>
+                            
+                            <div class="relative mb-6">
+                                <div class="absolute -left-6 w-4 h-4 bg-sunshine-yellow rounded-full border-2 border-white"></div>
+                                <div class="mb-1">
+                                    <span class="font-medium" data-en="Earned Achievement" data-kr="업적 획득">Earned Achievement</span>
+                                    <span class="text-sm text-stone-gray ml-2" data-en="3 days ago" data-kr="3일 전">3 days ago</span>
+                                </div>
+                                <p data-en="Earned 'Cafe Hopper' achievement" data-kr="'카페 여행자' 업적 획득">Earned "Cafe Hopper" achievement</p>
+                            </div>
+                            
+                            <div class="relative">
+                                <div class="absolute -left-6 w-4 h-4 bg-deep-navy rounded-full border-2 border-white"></div>
+                                <div class="mb-1">
+                                    <span class="font-medium" data-en="Answered Question" data-kr="질문 답변">Answered Question</span>
+                                    <span class="text-sm text-stone-gray ml-2" data-en="1 week ago" data-kr="1주일 전">1 week ago</span>
+                                </div>
+                                <p data-en="Answered question about street food markets in Seoul" data-kr="서울의 길거리 음식 시장에 관한 질문에 답변">Answered question about street food markets in Seoul</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cloud-white rounded-lg p-6 border border-light-sand">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold" data-en="Friends & Travel Buddies" data-kr="친구 및 여행 동료">Friends & Travel Buddies</h3>
+                            <button class="text-sky-blue flex items-center hover-effect">
+                                <i class="fas fa-user-plus mr-1"></i> <span data-en="Add Friend" data-kr="친구 추가">Add Friend</span>
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center p-3 bg-light-sand rounded-lg">
+                                <div class="w-12 h-12 bg-cloud-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-deep-navy font-medium">TK</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Taylor Kim</p>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-map-marker-alt text-sunset-coral mr-1"></i>
+                                        <span data-en="Seoul, South Korea" data-kr="서울, 대한민국">Seoul, South Korea</span>
+                                    </div>
+                                </div>
+                                <div class="level-badge w-8 h-8 bg-sky-blue text-white rounded-full flex items-center justify-center text-xs">
+                                    14
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-3 bg-light-sand rounded-lg">
+                                <div class="w-12 h-12 bg-cloud-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-deep-navy font-medium">LM</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Lisa Mori</p>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-map-marker-alt text-sunset-coral mr-1"></i>
+                                        <span data-en="Tokyo, Japan" data-kr="도쿄, 일본">Tokyo, Japan</span>
+                                    </div>
+                                </div>
+                                <div class="level-badge w-8 h-8 bg-sky-blue text-white rounded-full flex items-center justify-center text-xs">
+                                    10
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-3 bg-light-sand rounded-lg">
+                                <div class="w-12 h-12 bg-cloud-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-deep-navy font-medium">AR</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Alex Rodriguez</p>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-map-marker-alt text-sunset-coral mr-1"></i>
+                                        <span data-en="Seoul, South Korea" data-kr="서울, 대한민국">Seoul, South Korea</span>
+                                    </div>
+                                </div>
+                                <div class="level-badge w-8 h-8 bg-sky-blue text-white rounded-full flex items-center justify-center text-xs">
+                                    8
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-3 bg-light-sand rounded-lg">
+                                <div class="w-12 h-12 bg-cloud-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-deep-navy font-medium">JL</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Jason Lee</p>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-map-marker-alt text-sunset-coral mr-1"></i>
+                                        <span data-en="Busan, South Korea" data-kr="부산, 대한민국">Busan, South Korea</span>
+                                    </div>
+                                </div>
+                                <div class="level-badge w-8 h-8 bg-sky-blue text-white rounded-full flex items-center justify-center text-xs">
+                                    15
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Interactive Features -->
+    <script>
+        // Global Variables
+        let currentLanguage = 'en';
+        
+        // Document Ready Function
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Tab Navigation
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+                });
+            });
+            
+            // Initialize Achievement Category Filters
+            const achievementTabs = document.querySelectorAll('[data-achievement-category]');
+            achievementTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.getAttribute('data-achievement-category');
+                    achievementTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // Implementation for filtering achievements would go here
+                });
+            });
+            
+            // Initialize Challenge Category Filters
+            const challengeTabs = document.querySelectorAll('[data-challenge-category]');
+            challengeTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const category = this.getAttribute('data-challenge-category');
+                    challengeTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // Implementation for filtering challenges would go here
+                });
+            });
+            
+            // Initialize Q&A Filters
+            const qaFilters = document.querySelectorAll('[data-qa-filter]');
+            qaFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-qa-filter');
+                    qaFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    // Implementation for filtering Q&A would go here
+                });
+            });
+            
+            // For demo purposes, let's add a delayed notification and modal
+            setTimeout(() => {
+                showNotification(document.getElementById('notification-text').getAttribute('data-en'));
+            }, 3000);
+            
+           	        });
+        
+        // Passport Flipping Function
+        function flipPassport(id) {
+            const passport = document.getElementById(id + 'Passport');
+            passport.classList.toggle('flipped');
+        }
+        
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Notification Function
+        function showNotification(text) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notification-text').textContent = text;
+            
+            notification.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+            }, 3000);
+        }
+        
+        // Language Switching Function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update language toggle
+            if (lang === 'en') {
+                document.querySelector('.language-option.en').classList.add('active');
+                document.querySelector('.language-option.kr').classList.remove('active');
+                document.querySelector('.language-slider').style.transform = 'translateX(0)';
+            } else {
+                document.querySelector('.language-option.en').classList.remove('active');
+                document.querySelector('.language-option.kr').classList.add('active');
+                document.querySelector('.language-slider').style.transform = 'translateX(36px)';
+            }
+            
+            // Update all elements with data-en and data-kr attributes
+            const elementsWithTranslation = document.querySelectorAll('[data-en][data-kr]');
+            elementsWithTranslation.forEach(element => {
+    element.innerHTML = element.getAttribute(`data-${lang}`);
+});
+            
+            // Update input placeholders
+            const inputsWithPlaceholder = document.querySelectorAll('[data-en-placeholder][data-kr-placeholder]');
+            inputsWithPlaceholder.forEach(input => {
+                input.placeholder = input.getAttribute(`data-${lang}-placeholder`);
+            });
+        }
+        
+        // Q&A Language Toggle (separate for demo purposes)
+        function switchQALanguage(lang) {
+            if (lang === 'en') {
+                document.querySelector('.language-option.qa-en').classList.add('active');
+                document.querySelector('.language-option.qa-kr').classList.remove('active');
+                document.querySelector('.qa-slider').style.transform = 'translateX(0)';
+            } else {
+                document.querySelector('.language-option.qa-en').classList.remove('active');
+                document.querySelector('.language-option.qa-kr').classList.add('active');
+                document.querySelector('.qa-slider').style.transform = 'translateX(36px)';
+            }
+            
+            // Implementation for switching Q&A language would go here
+        }
+        
+        // Create Confetti Effect for Level Up Modal
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#5DA9E9', '#FF7E67', '#FFDA63', '#F4EAD5'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(confetti);
+            }
+        }
+    </script>
+</body>
+</html>
